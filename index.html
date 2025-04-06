@@ -1,1 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>East London Schools Map</title>
 
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+    <style>
+        #map {
+            height: 600px;
+        }
+    </style>
+</head>
+<body>
+    <h1>East London Schools Map</h1>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([51.5074, -0.1278], 12);  // Center map on East London
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var schools = [
+            { lat: 51.511, lon: -0.125, name: 'School A', info: 'Info about School A' },
+            { lat: 51.522, lon: -0.130, name: 'School B', info: 'Info about School B' },
+            { lat: 51.531, lon: -0.140, name: 'School C', info: 'Info about School C' }
+        ];
+
+        var markers = L.markerClusterGroup();
+
+        schools.forEach(function(school) {
+            var marker = L.marker([school.lat, school.lon])
+                .bindPopup('<b>' + school.name + '</b><br>' + school.info);
+            markers.addLayer(marker);
+        });
+
+        map.addLayer(markers);
+    </script>
+</body>
+</html>
