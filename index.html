@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>East London Schools Map</title>
+  <title>CST Schools Map</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link 
@@ -17,6 +17,24 @@
       margin: 0;
       font-family: sans-serif;
     }
+    .popup-content {
+      display: flex;
+      align-items: flex-start;
+      background-color: #2c2c2c;
+      color: #f0f0f0;
+      padding: 10px;
+      border-radius: 6px;
+      max-width: 300px;
+    }
+    .popup-content img {
+      margin-right: 10px;
+      width: 50px;
+      height: auto;
+    }
+    .popup-text a {
+      color: #aadfff;
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -24,7 +42,7 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    const map = L.map('map').setView([51.52, -0.05], 12);
+    const map = L.map('map').setView([51.54, -0.03], 12);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 18,
@@ -33,23 +51,84 @@
 
     const schools = [
       {
-        name: "East London Academy",
-        lat: 51.5204,
-        lng: -0.0461,
-        info: "Rated Outstanding. 1000+ students."
+        name: "The Excelsior Academy (TEA)",
+        lat: 51.5520,
+        lng: -0.0657,
+        address: "Shacklewell Lane, Hackney, London, E8 2EY",
+        website: "https://www.excelsiorcst.org/",
+        phone: "0207 275 1500",
+        info: "Rated Good. 1023 students.",
+        logo: "https://www.excelsiorcst.org/custom_images/logo.svg"
       },
       {
-        name: "Tower Hamlets High",
-        lat: 51.5155,
-        lng: -0.0610,
-        info: "Rated Good. Specialises in STEM."
+        name: "Forest Gate Community School (FGCS)",
+        lat: 51.5482,
+        lng: 0.0250,
+        address: "Forest Lane, Forest Gate, London, E7 9BB",
+        website: "https://www.forestgatecst.org/",
+        phone: "020 8534 8666",
+        info: "Rated Outstanding. 1352 students.",
+        logo: "https://www.forestgatecst.org/custom_images/logo.svg"
+      },
+      {
+        name: "Waterside Academy (WA)",
+        lat: 51.5390,
+        lng: -0.0760,
+        address: "317-319 Kingsland Road, Hackney, London, E8 4DL",
+        website: "https://www.watersidecst.org/",
+        phone: "020 3870 7500",
+        info: "Rated Good. 393 students.",
+        logo: "https://www.watersidecst.org/custom_images/logo.svg"
+      },
+      {
+        name: "Haggerston School (HS)",
+        lat: 51.5325,
+        lng: -0.0719,
+        address: "Weymouth Terrace, Hackney, London, E2 8LS",
+        website: "https://www.haggerstoncst.org/",
+        phone: "0207 739 7324",
+        info: "Rated Good. 1061 students.",
+        logo: "https://www.haggerstoncst.org/custom_images/logo.svg"
+      },
+      {
+        name: "Cumberland Community School (CCS)",
+        lat: 51.5250,
+        lng: 0.0330,
+        address: "Oban Close, London, E13 8SJ",
+        website: "https://www.cumberlandcst.org/",
+        phone: "020 7474 0231",
+        info: "Rated Good. 1421 students.",
+        logo: "https://www.cumberlandcst.org/custom_images/logo.svg"
+      },
+      {
+        name: "University Technical College Norfolk (UTCN)",
+        lat: 52.5987,
+        lng: 1.2793,
+        address: "Old Hall Road, Norwich, NR4 6FF",
+        website: "https://utcn.org.uk/",
+        phone: "01603 580280",
+        info: "Rated Good. 454 students.",
+        logo: "https://utcn.org.uk/custom_images/logo.svg"
       }
     ];
 
     schools.forEach(school => {
+      const popupContent = `
+        <div class="popup-content">
+          <img src="${school.logo}" alt="${school.name} Logo">
+          <div class="popup-text">
+            <b>${school.name}</b><br>
+            ${school.info}<br>
+            Address: ${school.address}<br>
+            Website: <a href="${school.website}" target="_blank">${school.website}</a><br>
+            Phone: ${school.phone}
+          </div>
+        </div>
+      `;
+
       L.marker([school.lat, school.lng])
         .addTo(map)
-        .bindPopup(`<b>${school.name}</b><br>${school.info}`);
+        .bindPopup(popupContent);
     });
   </script>
 </body>
